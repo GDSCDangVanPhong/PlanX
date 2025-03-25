@@ -2,6 +2,9 @@
   import { toTypedSchema } from '@vee-validate/zod'
   import * as z from 'zod'
   import {useForm} from "vee-validate";
+  import {useToast} from "~/components/ui/toast";
+
+const {toast} = useToast();
 
   const formSchema = toTypedSchema(z.object({
     email: z.string().email(),
@@ -23,16 +26,55 @@
       })
     });
 
-    console.log(status.value);
-
     if (status.value === 'success') {
-      router.push('/main');
-    } else {
-      console.error('Login failed:', error.value);
+      toast({
+        title: 'Login success',
+        description: 'Login successful',
+      })
+      setTimeout(() => {
+        router.push('/main')
+      }, 1900)
+    }
+
+    else {
+      toast({
+        variant:'destructive',
+        title: 'Login failed',
+        description: 'Try checking your credentials ',
+      })
     }
   };
 
+const handleForgotPassword = async () => {
+  const {data, error, status} = await useFetch('http://localhost:4000/forgotPassword', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email: email.value,
 
+    })
+  })
+  if (status.value === 'success') {
+    toast({
+      title: 'Successfully',
+      description: 'Reset password successful',
+    })
+
+  }
+
+  else {
+    toast({
+      variant:'destructive',
+      title: 'Failed',
+      description: 'Try checking your credentials ',
+    })
+  }
+
+
+
+}
 
 
   const [email] = defineField('email')
@@ -41,6 +83,8 @@
 
 <template>
   <div class="flex flex-col justify-center items-center h-screen ">
+    <Toaster />
+    <ParticlesBg class=" absolute inset-1" />
     <img class="h-24 mb-2 z-10" src="/assets/img/image_2025-03-19_105508347-removebg-preview.png " alt="Icon" >
     <Tabs default-value="login" class="w-96 z-10 "  >
       <TabsList class="grid w-full grid-cols-2 shadow-lg" >
@@ -100,13 +144,13 @@
               </FormField>
           </CardContent>
           <CardFooter>
-            <Button type="submit" class="w-full">Retrieve Password</Button>
+            <Button type="submit" class="w-full" @click="handleForgotPassword">Retrieve Password</Button>
           </CardFooter>
         </Card>
       </TabsContent>
     </Tabs>
   </div>
-  <ParticlesBg class="w-screen h-screen absolute inset-0"/>
+
 
 
 </template>

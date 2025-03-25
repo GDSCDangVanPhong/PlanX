@@ -11,6 +11,7 @@ import {
   Settings2,
   SquareTerminal
 } from "lucide-vue-next";
+import UserNav from "~/components/SideBar/UserNav.vue";
 
 
 const data = {
@@ -153,7 +154,9 @@ const data = {
       <SidebarGroup/>
       <SidebarGroup/>
     </SidebarContent>
-    <SidebarFooter/>
+    <SidebarFooter>
+      <UserNav :user="data.user" />
+    </SidebarFooter>
   </Sidebar>
 </template>
 
