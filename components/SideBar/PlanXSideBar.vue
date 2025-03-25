@@ -16,8 +16,8 @@ import UserNav from "~/components/SideBar/UserNav.vue";
 
 const data = {
   user: {
-    name: 'shadcn',
-    email: 'm@example.com',
+    name: 'Test',
+    email: 'Test123@example.com',
     avatar: '/avatars/shadcn.jpg',
   },
   teams: [
