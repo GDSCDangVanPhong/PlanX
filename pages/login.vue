@@ -3,73 +3,94 @@
   import * as z from 'zod'
   import {useForm} from "vee-validate";
   import {useToast} from "~/components/ui/toast";
+  import {Loader2} from "lucide-vue-next";
 
-const {toast} = useToast();
+  const {toast} = useToast();
 
   const formSchema = toTypedSchema(z.object({
     email: z.string().email(),
     password :z.string().min(1)
   }))
+  const isLoading =ref(false)
   const router = useRouter()
   const { handleSubmit, defineField, errors } = useForm({
     validationSchema: formSchema,
   })
   const handleLogin = async () => {
-    const { data, error, status } = await useFetch('http://localhost:4000/login', {
+    try {
+      isLoading.value = true
+      const {data, error, status} = await useFetch('http://localhost:4000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          email: email.value,
+          password: password.value
+        })
+      });
+
+      if (status.value === 'success') {
+        toast({
+          title: 'Login success',
+          description: 'Login successful',
+        })
+        setTimeout(() => {
+          router.push('/main')
+        }, 1900)
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Login failed',
+          description: 'Try checking your credentials ',
+        })
+      }
+    }
+    catch (error) {
+
+    }
+    finally {
+      isLoading.value = false
+    }
+
+
+
+  };
+
+const handleForgotPassword = async () => {
+  try{
+    isLoading.value = true
+    const {data, error, status} = await useFetch('http://localhost:4000/forgotPassword', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         email: email.value,
-        password: password.value
-      })
-    });
 
+      })
+    })
     if (status.value === 'success') {
       toast({
-        title: 'Login success',
-        description: 'Login successful',
+        title: 'Successfully',
+        description: 'Reset password successful',
       })
-      setTimeout(() => {
-        router.push('/main')
-      }, 1900)
+
     }
 
     else {
       toast({
         variant:'destructive',
-        title: 'Login failed',
+        title: 'Failed',
         description: 'Try checking your credentials ',
       })
     }
-  };
-
-const handleForgotPassword = async () => {
-  const {data, error, status} = await useFetch('http://localhost:4000/forgotPassword', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      email: email.value,
-
-    })
-  })
-  if (status.value === 'success') {
-    toast({
-      title: 'Successfully',
-      description: 'Reset password successful',
-    })
+  }
+  catch (e) {
 
   }
-
-  else {
-    toast({
-      variant:'destructive',
-      title: 'Failed',
-      description: 'Try checking your credentials ',
-    })
+  finally {
+    isLoading.value = false
   }
 
 
@@ -122,7 +143,11 @@ const handleForgotPassword = async () => {
             </div>
           </CardContent>
           <CardFooter>
-                <Button type="submit" @click="handleLogin" class="w-full">Login</Button>
+                <Button type="submit" @click="handleLogin" class="w-full" :disabled="isLoading" >
+                  <Loader2 v-if="isLoading" class="animate-spin" />
+                  <span v-if="isLoading">Please wait</span>
+                  <span v-if="!isLoading">Login</span>
+                </Button>
           </CardFooter>
         </Card>
       </TabsContent>
@@ -144,7 +169,11 @@ const handleForgotPassword = async () => {
               </FormField>
           </CardContent>
           <CardFooter>
-            <Button type="submit" class="w-full" @click="handleForgotPassword">Retrieve Password</Button>
+            <Button type="submit" class="w-full" :disabled="isLoading" @click="handleForgotPassword">
+              <Loader2 v-if="isLoading" class="animate-spin" />
+              <span v-if="isLoading">Please wait</span>
+              <span v-if="!isLoading">Retrieve Password</span>
+            </Button>
           </CardFooter>
         </Card>
       </TabsContent>
