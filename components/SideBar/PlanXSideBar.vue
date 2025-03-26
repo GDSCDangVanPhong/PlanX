@@ -12,6 +12,7 @@ import {
   SquareTerminal
 } from "lucide-vue-next";
 import UserNav from "~/components/SideBar/UserNav.vue";
+import NavContents from "~/components/SideBar/NavContents.vue";
 
 
 const data = {
@@ -151,8 +152,7 @@ const data = {
       <TeamSwitcher :teams="data.teams" />
     </SidebarHeader>
     <SidebarContent>
-      <SidebarGroup/>
-      <SidebarGroup/>
+      <NavContents/>
     </SidebarContent>
     <SidebarFooter>
       <UserNav :user="data.user" />
