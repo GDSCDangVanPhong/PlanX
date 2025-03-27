@@ -10,12 +10,16 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@pinia/nuxt": "^0.10.1",
+    "@unovis/ts": "^1.5.1",
+    "@unovis/vue": "^1.5.1",
     "@vee-validate/zod": "^4.15.0",
     "@vueuse/core": "^13.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-vue-next": "^0.482.0",
     "nuxt": "^3.16.0",
+    "pinia": "^3.0.1",
     "reka-ui": "^2.1.1",
     "shadcn-nuxt": "^1.0.3",
     "tailwind-merge": "^3.0.2",

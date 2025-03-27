@@ -13,7 +13,6 @@ const delegatedProps = computed(() => {
   return delegated
 })
 </script>
-
 <template>
   <Separator
     v-bind="delegatedProps"

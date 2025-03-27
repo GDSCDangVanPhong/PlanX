@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { Calendar, Home, Inbox, Search, Settings } from "lucide-vue-next"
+
+const tabState = useTabState()
 const items = [
   {
     title: "Home",
@@ -7,7 +9,7 @@ const items = [
     icon: Home,
   },
   {
-    title: "Inbox",
+    title: "Project",
     url: "#",
     icon: Inbox,
   },
@@ -31,11 +33,11 @@ const items = [
       <SidebarGroupContent>
         <SidebarMenu>
           <SidebarMenuItem v-for="item in items" :key="item.title">
-            <SidebarMenuButton asChild>
-              <a :href="item.url">
+            <SidebarMenuButton asChild  >
+              <div class="cursor-pointer" @click="tabState.changingState(item.title)">
                 <component :is="item.icon" />
                 <span>{{item.title}}</span>
-              </a>
+              </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
