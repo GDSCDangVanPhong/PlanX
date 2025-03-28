@@ -5,6 +5,8 @@ const Done =10
 import { SquareCheck } from 'lucide-vue-next';
 import BarChartCard from "~/components/CustomizedComps/BarChartCard.vue";
 import ProjectQuickView from "~/components/CustomizedComps/ProjectQuickView.vue";
+import CalendarCard from "~/components/CustomizedComps/CalendarCard.vue";
+import TasksTable from "~/components/CustomizedComps/TasksTable.vue";
 
 const data = [
   { name: 'Done Tasks', total: Done },
@@ -19,8 +21,11 @@ const DoneIcon = Check
     <div class="grid auto-rows-min gap-4 md:grid-cols-3">
       <BarChartCard/>
       <ProjectQuickView/>
+      <CalendarCard/>
     </div>
-    <div class="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
+    <div class="min-h-[100vh] flex-1 rounded-xl  md:min-h-min" >
+        <TasksTable/>
+    </div>
   </div>
 
 
