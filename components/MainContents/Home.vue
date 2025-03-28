@@ -17,7 +17,7 @@ const DoneIcon = Check
 </script>
 
 <template>
-  <div class="flex flex-1 flex-col gap-4 p-4 pt-0 mt-6">
+  <div class="flex flex-1 flex-col gap-4 px-5 ">
     <div class="grid auto-rows-min gap-4 md:grid-cols-3">
       <BarChartCard/>
       <ProjectQuickView/>
