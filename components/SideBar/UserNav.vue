@@ -23,7 +23,7 @@ const { isMobile } = useSidebar()
     <SidebarMenuItem>
       <DropdownMenu>
         <DropdownMenuTrigger as-child>
-          <SidebarMenuButton
+          <SidebarMenuButton :tooltip="user.email"
               size="lg"
               class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
           >

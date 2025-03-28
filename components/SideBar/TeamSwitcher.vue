@@ -15,10 +15,10 @@ import { ChevronsUpDown, Plus } from 'lucide-vue-next'
 
 <template>
   <SidebarMenu>
-    <SidebarMenuItem>
+    <SidebarMenuItem >
       <DropdownMenu>
         <DropdownMenuTrigger as-child>
-          <SidebarMenuButton
+          <SidebarMenuButton :tooltip="activeTeam.name"
               size="lg"
               class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
           >

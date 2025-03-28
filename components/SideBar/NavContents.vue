@@ -33,7 +33,7 @@ const items = [
       <SidebarGroupContent>
         <SidebarMenu>
           <SidebarMenuItem v-for="item in items" :key="item.title">
-            <SidebarMenuButton asChild  >
+            <SidebarMenuButton asChild :tooltip="item.title" >
               <div class="cursor-pointer" @click="tabState.changingState(item.title)">
                 <component :is="item.icon" />
                 <span>{{item.title}}</span>
