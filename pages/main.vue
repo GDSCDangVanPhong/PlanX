@@ -2,7 +2,9 @@
 
 import PlanXSideBar from "~/components/SideBar/PlanXSideBar.vue";
 import Home from "~/components/MainContents/Home.vue";
+import KanBanBoard from "~/components/MainContents/KanBanBoard.vue";
 const tabState = useTabState()
+const hello ="Hello World";
 </script>
 
 <template>
@@ -28,9 +30,8 @@ const tabState = useTabState()
           </Breadcrumb>
         </div>
       </header>
-      <Home/>
-
-
+      <Home v-if="tabState.tab === 'Home' " />
+      <KanBanBoard :title='hello' v-if="tabState.tab === 'Project' " class="flex-1" />
     </SidebarInset>
   </SidebarProvider>
 </template>

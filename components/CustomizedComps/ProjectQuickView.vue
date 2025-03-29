@@ -51,7 +51,7 @@
 
       </CardHeader>
       <CardContent class="h-60 ">
-        <ScrollArea class="h-full w-full px-3">
+        <ScrollArea class="h-full w-full pr-4">
             <div v-for="item in data" class="mb-2">
                 <div class="flex items-center mb-2">
                     <Avatar :shape="'circle'" class="  h-12 w-12">

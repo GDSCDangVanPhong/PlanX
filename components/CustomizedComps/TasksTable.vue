@@ -47,10 +47,10 @@ const invoices = [
 
 <template>
   <Card>
-    <CardContent>
-      <ScrollArea class="h-52">
-        <Table>
-          <TableCaption>A list of your recent invoices.</TableCaption>
+
+    <CardContent class="mt-1.5">
+      <ScrollArea class="h-52 pr-5  ">
+          <Table>
           <TableHeader>
             <TableRow>
               <TableHead class="w-[100px]">
