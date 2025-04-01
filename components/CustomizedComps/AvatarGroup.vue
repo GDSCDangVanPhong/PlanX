@@ -49,7 +49,6 @@ const displayedAvatars = computed(() => {
   return props.avatars.slice(0, props.maxVisible);
 });
 
-// Tùy chỉnh kích thước avatar dựa trên prop size
 const avatarSizeClass = computed(() => {
   switch (props.size) {
     case 'sm':

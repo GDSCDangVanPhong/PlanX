@@ -6,8 +6,31 @@
     import { Calendar,SquarePlus,MessageSquare } from 'lucide-vue-next';
 
 
+    const todo = ref([
+      { title: 'Thiết kế giao diện', date: '2025/04/01', comments: 3, tag : 'High' },
+      { title: 'Họp khách hàng', date: '2025/02/02', comments: 1 , tag: 'Medium' },
+      { title: 'Mua đồ ăn', date: '2025/06/02', comments: 5 , tag :'Low'},
+      { title: 'Xây nhà', date: '2025/09/02', comments: 8 ,tag : 'Medium' },
+    ]);
+
+    const inProgress = ref([
+      { title: 'Kiểm tra tính năng đăng nhập', date: '2025-03-31', comments: 5 },
+      { title: 'Tối ưu hóa database', date: '2025-04-01', comments: 2 },
+    ]);
+
+    const inReview = ref([
+      { title: 'Xem lại mã nguồn', date: '2025-03-30', comments: 4 },
+    ]);
+
+    const done = ref([
+      { title: 'Triển khai lên server', date: '2025-03-29', comments: 0 },
+      { title: 'Viết tài liệu', date: '2025-03-28', comments: 2 },
+    ]);
+
     import AvatarGroup from "~/components/CustomizedComps/AvatarGroup.vue";
     import draggable from 'vuedraggable';
+    import TaskCard from "~/components/CustomizedComps/KanBanComps/TaskCard.vue";
+    import CreateTaskDialog from "~/components/CustomizedComps/KanBanComps/CreateTaskDialog.vue";
     const avatarList = [
       { src: 'https://i.pravatar.cc/150?img=1' },
       { src: 'https://i.pravatar.cc/150?img=2' },
@@ -19,53 +42,33 @@
 
 <template>
   <div class="rounded-xl bg-muted/100 h-full px-2 pt-2 ">
-      <Button :variant="'outline'"  class="mb-2 w-full">
-        <SquarePlus class="w-4 h-4 mt-0.5" />
-        New Task
-      </Button>
+    <div class="px-3.5">
+      <CreateTaskDialog class="w-full">
+        <Button :variant="'outline'"  class="mb-2 w-full">
+          <SquarePlus class="w-4 h-4 mt-0.5 " />
+          New Task
+        </Button>
+      </CreateTaskDialog>
+    </div>
 
-      <Card class="flex-1 cursor-pointer hover:bg-muted/50 mb-1.5" d>
-        <CardHeader >
-          <CardTitle class="flex">
-            <span class="text-md font-semibold w-3/4 break-words">Planning a dinner at the center of city</span>
-            <Badge class="ml-auto h-6 bg-pink-700 hover:bg-pink-700">
-              High
-            </Badge>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div class="flex  ">
-            <div class="flex border rounded-md border-dashed items-center space-x-1 p-1.5 border-green-600 w-1/2">
-              <Calendar class="h-4"/>
-              <span class="text-sm text-slate-700" >29/03/2025</span>
-            </div>
-            <AvatarGroup :avatars="avatarList"  :max-visible="1" :size="'sm'" class=" ml-auto w-1/4" />
-          </div>
-        </CardContent>
-        <div>
-          <Separator />
-          <div class="flex px-2 pt-2 items-center mb-2">
-            <MessageSquare color="#696969" class="w-4 h-4 mr-1 "/>
-            <span class="text-muted-foreground">2</span>
-          </div>
-        </div>
-      </Card>
+    <ScrollArea class="h-96 mt-1 items-center ">
+      <draggable v-model="todo" group="tasks" tag="div" class="px-3.5">
+        <template #item="{ element }">
+          <TaskCard
+              :level =element.tag
+              :title="element.title"
+              :date="element.date"
+              :comments="element.comments"
+              :avatarList="avatarList"
+          />
+        </template>
+      </draggable>
+    </ScrollArea>
 
 
-    <Card class="flex-1 cursor-pointer hover:bg-muted/50" draggable="true">
-      <CardHeader >
-        <CardTitle class="flex">
-          <span class="text-md font-semibold w-3/4 break-words">Go Shopping</span>
-          <Badge class="ml-auto h-6 bg-blue-600 hover:bg-blue-600">
-            Medium
-          </Badge>
-        </CardTitle>
 
-      </CardHeader>
-      <CardContent>
 
-      </CardContent>
-    </Card>
+
   </div>
 </template>
 
