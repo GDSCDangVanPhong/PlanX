@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 import LevelSelector from "~/components/CustomizedComps/Selector/LevelSelector.vue";
+import DeadlinePicker from "~/components/CustomizedComps/Selector/DeadlinePicker.vue";
 </script>
 
 <template>
@@ -30,13 +31,13 @@ import LevelSelector from "~/components/CustomizedComps/Selector/LevelSelector.v
                 <FormMessage/>
               </FormItem>
                 <div class="mt-3 flex gap-5">
-                    <div class="w-2/3 space-y-2">
+                    <div class="w-1/3 space-y-2">
                       <FormLabel >Level</FormLabel>
                       <LevelSelector/>
                     </div>
-                  <div class="w-2/3 space-y-2 ml-auto">
+                  <div class="w-2/3 space-y-2 mt-2.5 ml-auto flex flex-col">
                     <FormLabel >Deadline</FormLabel>
-                    <LevelSelector/>
+                    <DeadlinePicker class="w-full"/>
                   </div>
                 </div>
               </FormField>

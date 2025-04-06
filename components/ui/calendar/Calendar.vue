@@ -31,7 +31,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
 
     <div class="flex flex-col mt-3 items-center sm:flex-row ">
       <CalendarGrid v-for="month in grid" :key="month.value.toString()">
-        <CalendarGridHead class="flex justify-center">
+        <CalendarGridHead class="flex  justify-center">
           <CalendarGridRow>
             <CalendarHeadCell
               v-for="day in weekDays" :key="day"

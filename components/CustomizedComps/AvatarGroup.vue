@@ -1,5 +1,5 @@
 <template>
-  <div class="flex -space-x-3.5 w-1/3 justify-end">
+  <div class="flex -space-x-4 w-1/3 justify-end">
     <!-- Hiển thị các avatar -->
     <div
         v-for="(avatar, index) in displayedAvatars"
@@ -8,7 +8,7 @@
         :class="avatarSizeClass"
     >
       <img
-          :src="avatar.src"
+          :src="avatar"
           alt="Avatar"
           class="rounded-full border-2 border-white object-cover w-full h-full"
       />
@@ -27,7 +27,7 @@
 <script setup>
 import { computed } from 'vue';
 
-// Props nhận từ parent component
+
 const props = defineProps({
   avatars: {
     type: Array,
@@ -36,15 +36,15 @@ const props = defineProps({
   },
   maxVisible: {
     type: Number,
-    default: 4, // Số avatar tối đa hiển thị trước khi co lại
+    default: 4,
   },
   size: {
     type: String,
-    default: 'md', // Kích thước avatar: 'sm', 'md', 'lg'
+    default: 'md',
   },
 });
 
-// Tính toán danh sách avatar hiển thị
+
 const displayedAvatars = computed(() => {
   return props.avatars.slice(0, props.maxVisible);
 });
@@ -52,7 +52,7 @@ const displayedAvatars = computed(() => {
 const avatarSizeClass = computed(() => {
   switch (props.size) {
     case 'sm':
-      return 'w-8 h-8';
+      return 'w-7 h-7';
     case 'md':
       return 'w-10 h-10';
     case 'lg':
