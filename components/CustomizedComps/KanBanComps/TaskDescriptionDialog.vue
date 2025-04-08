@@ -43,9 +43,9 @@ const comments =[
             <SplitterPanel :min-size="35"  :default-size="50" class="w-full ">
 
                 <div class="px-4" >
-                  <h1 class="font-bold text-lg">Hello</h1>
+                  <h1 class="font-bold text-lg">Thiết kế giao diện</h1>
                   <p class="font-semibold text-md mt-2">Description</p>
-                  <p class="break-words">udhsaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaapsadhaspdhasdh</p>
+                  <p class="break-words">Thiết kế giao diện cho banner quảng cáo</p>
                   <p class="font-bold mt-14">Comments</p>
                   <div class="flex space-x-3">
                     <Avatar class="w-8 h-8 mt-2" >
