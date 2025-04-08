@@ -13,6 +13,7 @@
   }))
   const isLoading =ref(false)
   const router = useRouter()
+  const route = useRoute()
   const { handleSubmit, defineField, errors } = useForm({
     validationSchema: formSchema,
   })
@@ -51,6 +52,7 @@
     }
     finally {
       isLoading.value = false
+
     }
 
 
@@ -75,7 +77,9 @@ const handleForgotPassword = async () => {
         title: 'Successfully',
         description: 'Reset password successful',
       })
-
+      setTimeout(() => {
+        router.push('/main')
+      }, 1900)
     }
 
     else {

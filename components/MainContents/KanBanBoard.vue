@@ -42,7 +42,7 @@
         <Column :title="'TO DO'"  :data-array="todo" class="border-t-4 border-purple-300"/>
         <Column :title="'IN PROGRESS'" :data-array="inProgress" class="border-t-4 border-yellow-300"/>
         <Column :title="'IN REVIEW'" :data-array="inReview" class="border-t-4 border-blue-300"/>
-        <Column :title="'DONE'"      :data-array="done" class="border-t-4 border-green-300"/>
+        <Column :title="'DONE'"  :data-array="done" class="border-t-4 border-green-300"/>
       </div>
 
 
