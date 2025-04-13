@@ -10,9 +10,9 @@ import {
 } from '~/components/ui/select'
 import AvatarGroup from "~/components/CustomizedComps/AvatarGroup.vue";
 
-// Define props và emits
+
 const props = defineProps<{
-  modelValue?: string // Giá trị mặc định nếu có
+  modelValue?: string
 }>()
 
 const emit = defineEmits<{
@@ -20,10 +20,10 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: string): void
 }>()
 
-// Khởi tạo level với giá trị mặc định là 'Medium' hoặc từ props
+
 const selectedLevel = ref(props.modelValue || 'High')
 
-// Các options cho select
+
 const levels = [
   { value: 'High', label: 'High', color: 'bg-red-400' },
   { value: 'Medium', label: 'Medium', color: 'bg-yellow-400' },
@@ -32,13 +32,13 @@ const levels = [
 const avatars = ['https://i.pravatar.cc/150?img=1',
   'https://i.pravatar.cc/150?img=2' ]
 
-// Watch để emit giá trị khi thay đổi
+
 watch(selectedLevel, (newValue) => {
   emit('update:level', newValue)
   emit('update:modelValue', newValue)
 })
 
-// Hàm để lấy class màu dựa trên level được chọn
+
 const getTriggerClass = () => {
   const level = levels.find(l => l.value === selectedLevel.value)
   return level ? `${level.color} text-white` : 'bg-gray-400 text-white'
@@ -83,7 +83,7 @@ const getTriggerClass = () => {
       <div class="mt-4">
         <span class="text-sm text-gray-600">Assignee</span>
 
-          <!-- Placeholder cho avatar - có thể thay bằng component AvatarGroup nếu cần -->
+
           <AvatarGroup :avatars="avatars" class="!justify-start"/>
 
       </div>

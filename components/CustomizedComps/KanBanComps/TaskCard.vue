@@ -5,6 +5,7 @@ import AvatarGroup from "~/components/CustomizedComps/AvatarGroup.vue";
 
 
 const data = defineProps<{
+    taskId : string,
     title: string;
     date: string;
     comments : number;
@@ -41,6 +42,7 @@ const data = defineProps<{
         </div>
         <AvatarGroup :avatars="data.avatarList"  :max-visible="1" :size="'sm'" class=" ml-auto " />
       </div>
+
     </CardContent>
 
   </Card>

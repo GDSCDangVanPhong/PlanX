@@ -6,7 +6,7 @@
   import {Loader2} from "lucide-vue-next";
 
   const {toast} = useToast();
-
+  const accountRole = useAccountRole()
   const formSchema = toTypedSchema(z.object({
     email: z.string().email(),
     password :z.string().min(1)
@@ -30,8 +30,10 @@
           password: password.value
         })
       });
-
+      const res = data.value
       if (status.value === 'success') {
+        accountRole.setRole(res.data.role)
+        console.log(accountRole.role)
         toast({
           title: 'Login success',
           description: 'Login successful',
@@ -72,6 +74,7 @@ const handleForgotPassword = async () => {
 
       })
     })
+
     if (status.value === 'success') {
       toast({
         title: 'Successfully',
