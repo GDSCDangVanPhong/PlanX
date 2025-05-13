@@ -19,8 +19,7 @@ import {
 } from '@/components/ui/dialog'
 import { ref, computed } from 'vue'
 
-const role = useAccountRole()
-const actionRole = role.role
+
 
 const { data: response, refresh } = await useFetch('http://localhost:4000/account')
 const users = computed(() => response.value?.data || [])
@@ -34,6 +33,12 @@ const emailToDelete = ref<string | null>(null)
 
 const handleAddAccount = async () => {
   try {
+    const accessToken = localStorage.getItem('accessToken')
+    if (!accessToken) {
+      console.error('Chưa đăng nhập hoặc token không tồn tại')
+      return
+    }
+
     const payload = {
       email: newEmail.value,
       userName: newUsername.value,
@@ -41,9 +46,12 @@ const handleAddAccount = async () => {
       role: newRole.value,
     }
 
-    const response = await $fetch('http://localhost:4000/createNewAccount/' + actionRole, {
+    const response = await $fetch('http://localhost:4000/createNewAccount', {
       method: 'POST',
       body: payload,
+      headers: {
+        Authorization: accessToken
+      }
     })
 
     if (response.status === 200) {
@@ -62,13 +70,23 @@ const handleAddAccount = async () => {
   }
 }
 
+
 const handleConfirmDelete = async () => {
   if (!emailToDelete.value) return
 
   try {
-    const response = await $fetch(`http://localhost:4000/account/${actionRole}`, {
+    const accessToken = localStorage.getItem('accessToken')
+    if (!accessToken) {
+      console.error('Chưa đăng nhập hoặc token không tồn tại')
+      return
+    }
+
+    const response = await $fetch('http://localhost:4000/account', {
       method: 'DELETE',
       body: { email: emailToDelete.value },
+      headers: {
+        Authorization: accessToken
+      }
     })
 
     if (response.status === 200) {
@@ -83,6 +101,7 @@ const handleConfirmDelete = async () => {
     emailToDelete.value = null
   }
 }
+
 </script>
 <template>
   <div class="px-9">
@@ -136,7 +155,7 @@ const handleConfirmDelete = async () => {
             class="group hover:bg-gray-100 transition-all"
         >
           <TableCell class="font-medium">{{ user.email }}</TableCell>
-          <TableCell>{{ user.username }}</TableCell>
+          <TableCell>{{ user.userName }}</TableCell>
           <TableCell>{{ user.role }}</TableCell>
           <TableCell>
             <Dialog>

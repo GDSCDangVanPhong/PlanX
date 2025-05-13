@@ -23,15 +23,60 @@ const props = defineProps<{
   title: string
   columnId: string
 }>()
+const onTaskDrop = (evt: any) => {
+  console.log('Drag event:', evt);
 
-const dynamicArray = ref(props.dataArray)
+  let task: Task | null = null;
+  let fromColumnId: string | null = null;
+  let toColumnId: string | null = null;
+
+  if (evt.added) {
+    task = evt.added.element;
+    toColumnId = props.columnId; // Use props.columnId directly for the target column
+    fromColumnId = evt.from?.dataset?.columnId || task.fromColumnId; // Fallback to task.fromColumnId if set
+  } else if (evt.removed) {
+    task = evt.removed.element;
+    fromColumnId = props.columnId; // Source column
+  } else if (evt.moved) {
+    task = evt.moved.element;
+    fromColumnId = props.columnId;
+    toColumnId = props.columnId;
+  }
+
+  console.log('Extracted:', { task, fromColumnId, toColumnId });
+
+  if (!task || !fromColumnId || !toColumnId) {
+    console.error('Invalid drag event data:', { task, fromColumnId, toColumnId });
+    return;
+  }
+
+  emit('update-tasks', {
+    task,
+    fromColumnId,
+    toColumnId,
+  });
+};
+
+const emit = defineEmits<{
+  (e: 'update-tasks', payload: { task: Task; fromColumnId: string; toColumnId: string }): void
+}>()
+
+
+const dynamicArray = ref<Task[]>([])
 const dialogVisible = ref(false)
 const selectedTaskId = ref<string | null>(null)
 
 const addTask = (newTask: Task) => {
-  dynamicArray.value.unshift(newTask)
-}
+  dynamicArray.value.unshift({ ...newTask, fromColumnId: props.columnId });
+};
 
+watch(
+    () => props.dataArray,
+    (newData) => {
+      dynamicArray.value = newData.map(task => ({ ...task, fromColumnId: props.columnId }));
+    },
+    { immediate: true }
+);
 const openDialog = (taskId: string) => {
   selectedTaskId.value = taskId
   dialogVisible.value = true
@@ -61,19 +106,27 @@ const closeDialog = () => {
     </div>
 
     <ScrollArea class="h-96 mt-1 items-center">
-      <draggable v-model="dynamicArray" group="tasks" tag="div" item-key="taskId" class="px-3.5">
-        <template #item="{ element }">
-          <div @click="openDialog(element.taskId)" class="cursor-pointer">
-            <TaskCard
-                :taskId="element.taskId"
-                :level="element.tag"
-                :title="element.title"
-                :date="element.date"
-                :comments="element.comments"
-                :avatarList="element.src"
-            />
-          </div>
-        </template>
+      <draggable
+          v-model="dynamicArray"
+          group="tasks"
+          tag="div"
+          item-key="taskId"
+          class="px-3.5"
+          
+          @change="onTaskDrop"
+      >
+      <template #item="{ element }">
+        <div @click="openDialog(element.taskId)" class="cursor-pointer">
+          <TaskCard
+              :taskId="element.taskId"
+              :level="element.tag"
+              :title="element.title"
+              :date="element.date"
+              :comments="element.comments"
+              :avatarList="element.src"
+          />
+        </div>
+      </template>
       </draggable>
     </ScrollArea>
 

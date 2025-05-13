@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-vue-next"
+import { Calendar, Home, Inbox, Search, Settings,ChevronRight } from "lucide-vue-next"
 
 const tabState = useTabState()
 const items = [
@@ -8,22 +8,14 @@ const items = [
     url: "/login",
     icon: Home,
   },
-  {
-    title: "Project",
-    url: "#",
-    icon: Inbox,
-  },
+
   {
     title: "Admin",
     url: "#",
     icon: Calendar,
   },
 
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
+
 ];
 
 </script>
@@ -41,6 +33,27 @@ const items = [
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
+          <Collapsible>
+            <CollapsibleTrigger class="w-full group">
+              <SidebarMenuButton :tooltip="'Project'">
+                <component :is="Inbox" />
+                <span>Project</span>
+                <ChevronRight
+                    class="ml-auto transition-transform duration-200 group-data-[state=open]:rotate-90"
+                />
+              </SidebarMenuButton>
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <SidebarMenuSub>
+                <SidebarMenuSubButton as-child>
+                  <span class="cursor-pointer" @click="tabState.changingState('Project')">Progress Board</span>
+                </SidebarMenuSubButton>
+                <SidebarMenuSubButton as-child>
+                  <span class="cursor-pointer" @click="tabState.changingState('Manage')">Manage Project</span>
+                </SidebarMenuSubButton>
+              </SidebarMenuSub>
+            </CollapsibleContent>
+          </Collapsible>
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>

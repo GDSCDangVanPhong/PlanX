@@ -1,4 +1,7 @@
+
+
 <script setup lang="ts">
+
 import {
   BadgeCheck,
   Bell,
@@ -8,6 +11,7 @@ import {
   Sparkles,
 } from 'lucide-vue-next'
 import {useSidebar} from "~/components/ui/sidebar";
+const router = useRouter()
 const props = defineProps<{
   user: {
     name: string
@@ -15,7 +19,13 @@ const props = defineProps<{
     avatar: string
   }
 }>()
+const tab = useTabState()
 const { isMobile } = useSidebar()
+const isOpenDialog = ref(false)
+const handleLogout = ()=>{
+  localStorage.clear()
+  router.push('/login')
+}
 </script>
 
 <template>
@@ -23,7 +33,7 @@ const { isMobile } = useSidebar()
     <SidebarMenuItem>
       <DropdownMenu>
         <DropdownMenuTrigger as-child>
-          <SidebarMenuButton :tooltip="user.email"
+          <SidebarMenuButton
               size="lg"
               class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
           >
@@ -51,7 +61,7 @@ const { isMobile } = useSidebar()
               <Avatar class="h-8 w-8 rounded-lg">
                 <AvatarImage :src="user.avatar" :alt="user.name" />
                 <AvatarFallback class="rounded-lg">
-                  PlanX
+                  CN
                 </AvatarFallback>
               </Avatar>
               <div class="grid flex-1 text-left text-sm leading-tight">
@@ -60,20 +70,19 @@ const { isMobile } = useSidebar()
               </div>
             </div>
           </DropdownMenuLabel>
-
+          <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem>
+
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
+          <DropdownMenuGroup >
+            <DropdownMenuItem class="cursor-pointer"  @click="tab.changingState('Account')">
               <BadgeCheck />
               Account
             </DropdownMenuItem>
-
-            <DropdownMenuItem>
-              <Bell />
-              Notifications
-            </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
+          <DropdownMenuItem class="cursor-pointer" @click="isOpenDialog=true" >
             <LogOut />
             Log out
           </DropdownMenuItem>
@@ -81,5 +90,17 @@ const { isMobile } = useSidebar()
       </DropdownMenu>
     </SidebarMenuItem>
   </SidebarMenu>
-</template>
+  <Dialog v-model:open="isOpenDialog">
 
+    <DialogContent>
+      <DialogHeader>
+        <DialogTitle>Are you sure to logout</DialogTitle>
+      </DialogHeader>
+      <DialogFooter class="flex">
+        <Button @click="handleLogout">Confirm</Button>
+        <Button :variant="'destructive'" @click="isOpenDialog=false">Cancel</Button>
+      </DialogFooter>
+    </DialogContent>
+
+  </Dialog>
+</template>
